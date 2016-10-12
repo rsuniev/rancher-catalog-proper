@@ -48,7 +48,7 @@ proxy:
 etcd:
     image: rancher/etcd:v2.3.7-9
     labels:
-        io.rancher.scheduler.affinity:host_label_soft: etcd=true
+        io.rancher.scheduler.affinity:host_label: etcd=true
         io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
         io.rancher.sidekicks: data
     environment:
@@ -72,8 +72,7 @@ data:
 
 kubernetes:
     labels:
-        io.rancher.scheduler.affinity:host_label_soft: orchestration=true
-        io.rancher.scheduler.affinity:host_label_soft_ne: etcd=true
+        io.rancher.scheduler.affinity:host_label: orchestration=true
         io.rancher.container.create_agent: "true"
         io.rancher.container.agent.role: environmentAdmin
     command: 
@@ -94,8 +93,7 @@ kubernetes:
 
 kubectld:
     labels:
-        io.rancher.scheduler.affinity:host_label_soft: orchestration=true
-        io.rancher.scheduler.affinity:host_label_soft_ne: etcd=true
+        io.rancher.scheduler.affinity:host_label: orchestration=true
         io.rancher.k8s.kubectld: "true"
     environment:
         SERVER: http://master
@@ -111,8 +109,7 @@ scheduler:
         - --address=0.0.0.0
     image: rancher/k8s:v1.2.4-rancher10
     labels:
-        io.rancher.scheduler.affinity:host_label_soft: orchestration=true
-        io.rancher.scheduler.affinity:host_label_soft_ne: etcd=true
+        io.rancher.scheduler.affinity:host_label: orchestration=true
     links:
         - kubernetes:master
 
@@ -127,8 +124,7 @@ controller-manager:
         - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
     image: rancher/k8s:v1.2.4-rancher10
     labels:
-        io.rancher.scheduler.affinity:host_label_soft: orchestration=true
-        io.rancher.scheduler.affinity:host_label_soft_ne: etcd=true
+        io.rancher.scheduler.affinity:host_label: orchestration=true
         io.rancher.container.create_agent: "true"
         io.rancher.container.agent.role: environmentAdmin
     links:
@@ -136,8 +132,7 @@ controller-manager:
 
 rancher-kubernetes-agent:
     labels:
-        io.rancher.scheduler.affinity:host_label_soft: orchestration=true
-        io.rancher.scheduler.affinity:host_label_soft_ne: etcd=true
+        io.rancher.scheduler.affinity:host_label: orchestration=true
         io.rancher.container.create_agent: "true"
         io.rancher.container.agent_service.labels_provider: "true"
     environment:
@@ -152,8 +147,7 @@ rancher-kubernetes-agent:
 rancher-ingress-controller:
     image: rancher/lb-controller:v0.2.2
     labels:
-        io.rancher.scheduler.affinity:host_label_soft: orchestration=true
-        io.rancher.scheduler.affinity:host_label_soft_ne: etcd=true
+        io.rancher.scheduler.affinity:host_label: orchestration=true
         io.rancher.container.create_agent: "true"
         io.rancher.container.agent.role: environment
     environment:
